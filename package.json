@@ -1,0 +1,20 @@
+{
+  "name": "topsis-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Garvit Batra",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
+    "express-formidable": "^1.2.0",
+    "formidable": "^2.1.1",
+    "nodemailer": "^6.9.0"
+  }
+}
