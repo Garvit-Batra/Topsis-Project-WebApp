@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(upload());
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
@@ -16,19 +16,21 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
   if (req.files) {
-    let file = req.files.file;
-    let fileName = file.name;
-    file.mv("./uploads/" + fileName, function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        res.sendFile(__dirname + "/greetings.html");
-      }
-    });
+    // let file = req.files.file;
+    // let fileName = file.name;
+    // file.mv("./uploads/" + fileName, function (err) {
+    //   if (err) {
+    //     console.log(err);
+    //   } else {
+    //     res.sendFile(__dirname + "/greetings.html");
+    //   }
+    // });
+    res.sendFile(__dirname + "/greetings.html");
   }
+  // "./uploads/" +
   const python = spawn("python", [
     "102017132.py",
-    "./uploads/" + req.files.file.name,
+    req.files.file.name,
     req.body.weights,
     req.body.impact,
     "result.csv",
