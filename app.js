@@ -58,11 +58,11 @@ app.post("/", (req, res) => {
   const mailOptions = {
     from: process.env.MAIL,
     to: req.body.email,
-    subject: "Email is here!",
+    subject: "Your RESULT.csv is here!",
     attachments: [
       {
-        filename: "result.csv",
-        path: "result.csv",
+        filename: "RESULT.csv",
+        path: "RESULT.csv",
       },
     ],
   };
@@ -70,7 +70,7 @@ app.post("/", (req, res) => {
     if (err) {
       console.log("Error " + err);
     } else {
-      console.log("Email sent successfully");
+      console.log("Your RESULT.csv is here!");
     }
     transporter.close();
   });
