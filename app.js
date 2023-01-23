@@ -1,4 +1,5 @@
 require("dotenv").config();
+const fs = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
 var nodemailer = require("nodemailer");
@@ -27,6 +28,13 @@ app.post("/", (req, res) => {
       }
     });
   }
+  fs.open("result.csv", "w", function (err, file) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("saved!");
+    }
+  });
   const python = spawn("python", [
     "102017132.py",
     "./uploads/" + req.files.file.name,
