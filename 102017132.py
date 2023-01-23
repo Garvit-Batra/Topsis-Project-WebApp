@@ -40,6 +40,7 @@ def topsis(norm_input_dataset, input_dataset, nCol, weights, impact):
     method='max', ascending=False))
     input_dataset = input_dataset.astype({"Rank": int})
     input_dataset.to_csv(sys.argv[4], index=False)
+    print(input_dataset.to_csv(index=False))
 
 def main():
     if len(sys.argv) != 5:
