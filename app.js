@@ -50,7 +50,7 @@ app.post("/", (req, res) => {
   const mailOptions = {
     from: process.env.MAIL,
     to: req.body.email,
-    subject: "Your result.csv is here!",
+    subject: "Email is here!",
     attachments: [
       {
         filename: "result.csv",
