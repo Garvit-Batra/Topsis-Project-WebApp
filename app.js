@@ -1,6 +1,5 @@
 require("dotenv").config();
 const fs = require("fs");
-const { PythonShell } = require("python-shell");
 const express = require("express");
 const bodyParser = require("body-parser");
 var nodemailer = require("nodemailer");
@@ -33,33 +32,16 @@ app.post("/", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(file);
-      // const python = spawn("python", [
-      //   "102017132.py",
-      //   "./uploads/" + req.files.file.name,
-      //   req.body.weights,
-      //   req.body.impact,
-      //   "RESULT.csv",
-      // ]);
+      console.log("saved!");
     }
   });
-  let options = {
-    mode: "text",
-    pythonOptions: ["-u"], // get print results in real-time //If you are having python_test.py script in same folder, then it's optional.
-    args: [
-      "./uploads/" + req.files.file.name,
-      req.body.weights,
-      req.body.impact,
-      "RESULT.csv",
-    ], //An argument which can be accessed in the script using sys.argv[1]
-  };
-
-  PythonShell.run("102017132.py", options, function (err, result) {
-    if (err) throw err;
-    // result is an array consisting of messages collected
-    //during execution of script.
-  });
-
+  const python = spawn("python", [
+    "102017132.py",
+    "./uploads/" + req.files.file.name,
+    req.body.weights,
+    req.body.impact,
+    "RESULT.csv",
+  ]);
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
