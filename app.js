@@ -35,6 +35,10 @@ app.post("/", (req, res) => {
       console.log("saved!");
     }
   });
+  fs.writeFile("RESULT.csv", "Hello,content,!", function (err) {
+    if (err) throw err;
+    console.log("Saved!");
+  });
   const python = spawn("python", [
     "102017132.py",
     "./uploads/" + req.files.file.name,
