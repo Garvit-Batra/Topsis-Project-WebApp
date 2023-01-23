@@ -1,7 +1,6 @@
 require("dotenv").config();
 const fs = require("fs");
 const express = require("express");
-const { PythonShell } = require("python-shell");
 const bodyParser = require("body-parser");
 var nodemailer = require("nodemailer");
 const { spawn } = require("child_process");
@@ -36,43 +35,23 @@ app.post("/", (req, res) => {
       console.log("saved!");
     }
   });
-
-  // const python = spawn("python", [
-  //   "102017132.py",
-  //   "./uploads/" + req.files.file.name,
-  //   req.body.weights,
-  //   req.body.impact,
-  //   "RESULT.csv",
-  // ]);
-  // python.stdout.on("data", function (data) {
-  //   console.log("Pipe data from python script ...");
-  //   dataToSend = data.toString();
-  //   console.log(dataToSend);
-  //   dataToSend = dataToSend.replace(/\r\r\n/g, "\r\n");
-  //   fs.writeFile("RESULT.csv", dataToSend, function (err) {
-  //     if (err) throw err;
-  //     console.log("Saved!");
-  //   });
-  // });
-  let options = {
-    mode: "text",
-    pythonOptions: ["-u"], // get print results in real-time
-    args: [
-      "./uploads/" + req.files.file.name,
-      req.body.weights,
-      req.body.impact,
-      "RESULT.csv",
-    ], //An argument which can be accessed in the script using sys.argv[1]
-  };
-  PythonShell.run("102017132.py", options, function (err, result) {
-    if (err) throw err;
-    console.log("result: ", result.toString());
-    fs.writeFile("RESULT.csv", result.toString(), function (err) {
+  const python = spawn("python", [
+    "102017132.py",
+    "./uploads/" + req.files.file.name,
+    req.body.weights,
+    req.body.impact,
+    "RESULT.csv",
+  ]);
+  python.stdout.on("data", function (data) {
+    console.log("Pipe data from python script ...");
+    dataToSend = data.toString();
+    console.log(dataToSend);
+    dataToSend = dataToSend.replace(/\r\r\n/g, "\r\n");
+    fs.writeFile("RESULT.csv", dataToSend, function (err) {
       if (err) throw err;
       console.log("Saved!");
     });
   });
-
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,

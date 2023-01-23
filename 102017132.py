@@ -1,6 +1,5 @@
 import os
 import sys
-os.system('python3 -m pip install pandas')
 import pandas as pd
 
 def Normalize(norm_input_dataset,nCol,weights):
