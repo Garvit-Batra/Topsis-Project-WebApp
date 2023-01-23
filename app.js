@@ -32,16 +32,16 @@ app.post("/", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("saved!");
+      console.log(file);
+      const python = spawn("python", [
+        "102017132.py",
+        "./uploads/" + req.files.file.name,
+        req.body.weights,
+        req.body.impact,
+        "RESULT.csv",
+      ]);
     }
   });
-  const python = spawn("python", [
-    "102017132.py",
-    "./uploads/" + req.files.file.name,
-    req.body.weights,
-    req.body.impact,
-    "RESULT.csv",
-  ]);
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
