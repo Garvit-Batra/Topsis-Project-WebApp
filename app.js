@@ -1,5 +1,4 @@
 require("dotenv").config();
-const { PythonShell } = require("python-shell");
 const express = require("express");
 const bodyParser = require("body-parser");
 var nodemailer = require("nodemailer");
@@ -29,12 +28,11 @@ app.post("/", (req, res) => {
     });
   }
   const python = spawn("python", [
-    // "102017132.py",
-    // "./uploads/" + req.files.file.name,
-    // req.body.weights,
-    // req.body.impact,
-    // "result.csv",
-    "sample.py",
+    "102017132.py",
+    "./uploads/" + req.files.file.name,
+    req.body.weights,
+    req.body.impact,
+    "result.csv",
   ]);
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
