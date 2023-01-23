@@ -28,7 +28,7 @@ app.post("/", (req, res) => {
       }
     });
   }
-  fs.open("result.csv", "w", function (err, file) {
+  fs.open("RESULT.csv", "w", function (err, file) {
     if (err) {
       console.log(err);
     } else {
@@ -40,7 +40,7 @@ app.post("/", (req, res) => {
     "./uploads/" + req.files.file.name,
     req.body.weights,
     req.body.impact,
-    "result.csv",
+    "RESULT.csv",
   ]);
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
