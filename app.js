@@ -2,12 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 var nodemailer = require("nodemailer");
-const mongoose = require("mongoose");
-const mongodb = require("mongodb");
-const multer = require("multer");
 const { spawn } = require("child_process");
 const upload = require("express-fileupload");
-const path = require("path");
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -23,23 +19,21 @@ app.post("/", (req, res) => {
   if (req.files) {
     let file = req.files.file;
     let fileName = file.name;
-    // file.mv("./uploads/" + fileName, function (err) {
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    //     res.sendFile(__dirname + "/greetings.html");
-    //   }
-    // });
+    file.mv("./uploads/" + fileName, function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.sendFile(__dirname + "/greetings.html");
+      }
+    });
     res.sendFile(__dirname + "/greetings.html");
   }
-
   const python = spawn("python", [
-    // "102017132.py",
-    // "./uploads/" + req.files.file.name,
-    // req.body.weights,
-    // req.body.impact,
-    // "result.csv",
-    "sample.py",
+    "102017132.py",
+    "./uploads/" + req.files.file.name,
+    req.body.weights,
+    req.body.impact,
+    "result.csv",
   ]);
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
