@@ -52,42 +52,42 @@ app.post("/", (req, res) => {
     fs.writeFile("RESULT.csv", dataToSend, function (err) {
       if (err) throw err;
       console.log("Saved!");
+      let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
+        auth: {
+          type: "OAuth2",
+          user: process.env.MAIL_USERNAME,
+          clientId: process.env.OAUTH_CLIENTID,
+          clientSecret: process.env.OAUTH_CLIENT_SECRET,
+          refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+          accessToken: process.env.ACCESS_TOKEN,
+        },
+      });
+      const mailOptions = {
+        from: process.env.MAIL,
+        to: req.body.email,
+        subject: "Your RESULT.csv is here!",
+        attachments: [
+          {
+            filename: "RESULT.csv",
+            path: "RESULT.csv",
+          },
+        ],
+      };
+      transporter.sendMail(mailOptions, function (err, data) {
+        if (err) {
+          console.log("Error " + err);
+        } else {
+          console.log("Your RESULT.csv is here!");
+        }
+        transporter.close();
+      });
     });
   });
   python.stderr.on("data", (data) => {
     console.log(data.toString());
-  });
-  let transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-      type: "OAuth2",
-      user: process.env.MAIL_USERNAME,
-      clientId: process.env.OAUTH_CLIENTID,
-      clientSecret: process.env.OAUTH_CLIENT_SECRET,
-      refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-      accessToken: process.env.ACCESS_TOKEN,
-    },
-  });
-  const mailOptions = {
-    from: process.env.MAIL,
-    to: req.body.email,
-    subject: "Your RESULT.csv is here!",
-    attachments: [
-      {
-        filename: "RESULT.csv",
-        path: "RESULT.csv",
-      },
-    ],
-  };
-  transporter.sendMail(mailOptions, function (err, data) {
-    if (err) {
-      console.log("Error " + err);
-    } else {
-      console.log("Your RESULT.csv is here!");
-    }
-    transporter.close();
   });
 });
 
