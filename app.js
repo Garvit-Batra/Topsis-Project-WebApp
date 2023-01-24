@@ -36,7 +36,7 @@ app.post("/", (req, res) => {
     }
   });
   const python = spawn("python", [
-    "102017132.py",
+    "sample.py",
     "./uploads/" + req.files.file.name,
     req.body.weights,
     req.body.impact,
