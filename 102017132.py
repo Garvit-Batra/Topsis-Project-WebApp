@@ -1,7 +1,5 @@
 import os
 import sys
-import subprocess
-subprocess.run(["pip","install","pandas"])
 import pandas as pd
 def Normalize(norm_input_dataset,nCol,weights):
     for j in range(1,nCol):
