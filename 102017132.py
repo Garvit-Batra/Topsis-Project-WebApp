@@ -1,5 +1,6 @@
 import os
 import sys
+import csv
 import pandas as pd
 
 def Normalize(norm_input_dataset,nCol,weights):
@@ -40,7 +41,7 @@ def topsis(norm_input_dataset, input_dataset, nCol, weights, impact):
     method='max', ascending=False))
     input_dataset = input_dataset.astype({"Rank": int})
     input_dataset.to_csv(sys.argv[4], index=False)
-    print(input_dataset.to_csv(index=False))
+    # print(input_dataset.to_csv(index=False))
 
 def main():
     if len(sys.argv) != 5:
@@ -55,6 +56,9 @@ def main():
     else:
         input_dataset, norm_input_dataset = pd.read_csv(
             sys.argv[1]), pd.read_csv(sys.argv[1])
+        with open(sys.argv[1], "r") as csvfile:
+            all_lines = csvfile.readlines()
+            print(all_lines)
         nCol = len(norm_input_dataset.columns.values)
         if nCol < 3:
             print("Input file have less then 3 columns")
