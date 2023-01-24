@@ -52,6 +52,9 @@ app.post("/", (req, res) => {
       console.log("Saved!");
     });
   });
+  python.stderr.on("data", (data) => {
+    console.log(data.toString());
+  });
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
