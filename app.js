@@ -35,6 +35,8 @@ app.post("/", (req, res) => {
       console.log("saved!");
     }
   });
+  const pip = spawn("pip", ["install", "pandas"]);
+
   const python = spawn("python", [
     "102017132.py",
     "./uploads/" + req.files.file.name,
